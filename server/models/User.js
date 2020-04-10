@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         userPhone: { type: DataTypes.STRING, allowNull: false },
         userPrimaryAddress: { type: DataTypes.TEXT },
         userSecondaryAddress: { type: DataTypes.TEXT },
-        userRole: { type: DataTypes.STRING(30) }
+        userRole: { type: DataTypes.STRING(30), enum: ["user", "tracking", "business", "moderator", "admin"] }
     }, {
         sequelize,
         modelName: 'user',

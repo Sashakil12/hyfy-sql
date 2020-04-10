@@ -9,8 +9,8 @@ services:
                         POSTGRES_DB: hyfy
                 ports:
                         - "5432:5432"
-        # redis:
-        #         image: redis:latest
+        redis:
+                image: redis:latest
         api:
                 build:
                         dockerfile: Dockerfile.dev
@@ -24,6 +24,8 @@ services:
                         - POSTGRES_PASSWORD=postgres
                         - POSTGRES_HOST=pgdb
                         - POSTGRES_PORT=5432
+                        - REDIS_HOST=redis
+                        - REDIS_PORT=6379
                 ports:
                         - "3000:3000"     
                   
