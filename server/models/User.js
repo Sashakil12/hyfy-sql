@@ -13,9 +13,10 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 isEmail: true
             },
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
-        userPassword: { type: DataTypes.TEXT },
+        userPassword: { type: DataTypes.TEXT, allowNull: false },
         userFirstName: {
             type: DataTypes.STRING,
             validate: {
@@ -38,13 +39,15 @@ module.exports = (sequelize, DataTypes) => {
                 isAlpha: true
             }
         },
-        userZip: { type: DataTypes.INTEGER },
+        userZip: { type: DataTypes.INTEGER, validate: { isNumeric: true } },
         userEmailVerified: { type: DataTypes.BOOLEAN, defaultValue: false },
         userVerificationCode: { type: DataTypes.TEXT },
+        userVerificationCodeHash: { type: DataTypes.TEXT },
         userIP: { type: DataTypes.STRING },
-        userPhone: { type: DataTypes.STRING },
+        userPhone: { type: DataTypes.STRING, allowNull: false },
         userPrimaryAddress: { type: DataTypes.TEXT },
-        userSecondaryAddress: { type: DataTypes.TEXT }
+        userSecondaryAddress: { type: DataTypes.TEXT },
+        userRole: { type: DataTypes.STRING(30) }
     }, {
         sequelize,
         modelName: 'user',

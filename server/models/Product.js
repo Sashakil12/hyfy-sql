@@ -29,9 +29,8 @@ module.exports = (sequelize, DataTypes) => {
         productImage: {
             type: DataTypes.TEXT
         },
-
-        productCategoryId: { type: DataTypes.STRING },
-        inStock: { type: DataTypes.INTEGER },
+        productCategoryId: { type: DataTypes.INTEGER, allowNull: false },
+        stockQty: { type: DataTypes.INTEGER },
         isLive: { type: DataTypes.BOOLEAN, defaultValue: false },
     }, {
         sequelize,

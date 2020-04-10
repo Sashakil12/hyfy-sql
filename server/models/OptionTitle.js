@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'option',
         indexes: [{
             unique: true,
-            fields: ['optionId']
+            fields: ['optionTitleId']
         }],
 
         timestamps: false

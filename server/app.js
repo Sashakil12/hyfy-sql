@@ -1,9 +1,14 @@
 const express = require('express');
 const app = express()
 const Sequelize = require("sequelize");
+const { DataTypes } = require("sequelize")
+const userRoutes = require('./Routes/UserRoutes')
 
 
-const PORT = process.env.PORT || 3100
+
+
+//db connect
+const PORT = process.env.PORT || 3000
 app.use(express.json())
 const sequelize = new Sequelize(
     process.env.POSTGRES_DBNAME,
@@ -30,28 +35,34 @@ const OrderInvoice = require('./models/OrderInvoice')(sequelize, Sequelize.DataT
 const Options = require('./models/Options')(sequelize, Sequelize.DataTypes);
 const OptionTitle = require('./models/OptionTitle')(sequelize, Sequelize.DataTypes)
 const ProductOption = require('./models/productOption')(sequelize, Sequelize.DataTypes)
-
-sequelize.sync()
-app.get('/', (req, res) => {
-    // console.log(req.body)
-    OptionTitle
-        .create({ ...req.body })
-        .then((user) => {
-            console.log(user.dataValues, "saved again")
-            res.status(200).send()
-        })
-
+Product.belongsTo(Category, {
+    foreignKey: 'productCategoryId',
+    targetKey: "categoryId"
 })
-const check = async () => {
-    try {
-        await sequelize.authenticate();
 
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-}
-app.listen(PORT, () => {
-    console.log('listening on port', PORT)
-    check()
+
+
+
+// app.get('/prodcat', async (req, res) => {
+//     // Category.create({ ...req.body.category }).then(cate => {
+//     //     console.log(cate.dataValues)
+//     //     Product.create({ ...req.body.product, productCategoryId: cate.dataValues.categoryId })
+
+//     // })
+//     Product.findAll({ include: Category }).then(prod => {
+//         console.log(prod.dataValues)
+//         res.json({ ...prod })
+//     })
+
+// })
+app.use('/users', userRoutes)
+// app.use('tracker', trackerRoutes)
+// app.use('business', businessRoutes)
+// app.use('moderator', moderatorRoutes)
+// app.use('admin', adminRoutes)
+sequelize.sync().then(() => {
+    app.listen(PORT, () => {
+        console.log('listening on port', PORT)
+
+    })
 })
